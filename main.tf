@@ -51,8 +51,8 @@ resource "aws_security_group" "ssh_and_web" {
 }
 
 resource "aws_key_pair" "poc_key" {
-  key_name   = "AWS POC Key"
-  public_key = var.public_key
+    key_name = "AWS POC Key"
+    public_key = var.public_key
 }
 
 resource "aws_instance" "nginx1" {
@@ -92,33 +92,33 @@ output "nginx2_public_ip" {
 # Lambda resources
 
 resource "aws_iam_role" "lambda_exec_role" {
-  name        = "lambda_exec"
-  path        = "/"
-  description = "Allows Lambda Function to call AWS services on your behalf."
+    name = "lambda_exec"
+    path = "/"
+    description = "Allows Lambda Function to call AWS services on your behalf."
 
-  assume_role_policy = <<EOF
+    assume_role_policy = <<EOF
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
 }
 EOF
 }
 
 resource "aws_lambda_function" "lambda_function" {
-  role             = aws_iam_role.lambda_exec_role.arn
-  handler          = "lambda.handler"
-  runtime          = "python3.8"
-  filename         = "lambda.zip"
-  function_name    = "time_func"
-  source_code_hash = filebase64sha256("lambda.zip")
+    role = aws_iam_role.lambda_exec_role.arn
+    handler = "lambda.handler"
+    runtime = "python3.8"
+    filename = "lambda.zip"
+    function_name = "time_func"
+    source_code_hash = filebase64sha256("lambda.zip")
 }
 
 
