@@ -43,10 +43,10 @@ resource "aws_security_group" "ssh_and_web" {
     }
 
     egress {
-       from_port = 0
-       to_port = 0
-       protocol = "-1"
-       cidr_blocks = ["0.0.0.0/0"]
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
@@ -103,7 +103,7 @@ resource "aws_iam_role" "lambda_exec_role" {
         {
             "Effect": "Allow",
             "Principal": {
-              "Service": "lambda.amazonaws.com"
+                "Service": "lambda.amazonaws.com"
             },
             "Action": "sts:AssumeRole"
         }
@@ -135,10 +135,10 @@ resource "aws_security_group" "http_sg" {
     }
 
     egress {
-       from_port = 0
-       to_port = 0
-       protocol = "-1"
-       cidr_blocks = ["0.0.0.0/0"]
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
     }
 }
 
