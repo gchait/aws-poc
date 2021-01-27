@@ -7,7 +7,7 @@ provider "aws" {
 
 variable "image_id" {
     type = string
-    default = "ami-009b16df9fcaac611"
+    default = "ami-0502e817a62226e03"
 }
 
 variable "flavor" {
@@ -17,7 +17,12 @@ variable "flavor" {
 
 variable "ingress_ports" {
     type = list(number)
-    default = [22, 80]
+    default = [22, 8080]
+}
+
+variable "egress_ports" {
+    type = list(number)
+    default = [80, 8080, 443]
 }
 
 variable "public_key" {
@@ -30,9 +35,21 @@ variable "public_key" {
 
 resource "aws_security_group" "ssh_and_web" {
     name = "SSH & WEB"
+
     dynamic "ingress" {
         iterator = port 
         for_each = var.ingress_ports
+        content {
+            from_port = port.value
+            to_port = port.value
+            protocol = "TCP"
+            cidr_blocks = ["0.0.0.0/0"]
+        }
+    }
+
+    dynamic "egress" {
+        iterator = port 
+        for_each = var.egress_ports
         content {
             from_port = port.value
             to_port = port.value

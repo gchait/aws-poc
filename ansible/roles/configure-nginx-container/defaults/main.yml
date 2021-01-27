@@ -1,0 +1,9 @@
+---
+docker_package: docker-ce
+remote_dir: /home/ubuntu
+my_name: Guy
+html_file_name: index.html
+image_name: name-nginx-i
+container_name: name-nginx-c
+port_map: 8080:80
+...

@@ -1,0 +1,4 @@
+---
+get_docker_url: https://get.docker.com
+get_docker_dest: /tmp/get-docker.sh
+...

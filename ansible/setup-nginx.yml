@@ -1,0 +1,5 @@
+---
+- hosts: nginx_servers
+  roles:
+  - configure-nginx-container
+...

@@ -1,0 +1,10 @@
+---
+- name: Get the official Docker installation script
+  get_url:
+    url: "{{ get_docker_url }}"
+    dest: "{{ get_docker_dest }}"
+
+- name: Install Docker
+  command: "/bin/sh {{ get_docker_dest }}"
+  become: yes
+...

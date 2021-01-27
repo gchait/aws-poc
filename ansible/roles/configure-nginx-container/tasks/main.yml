@@ -1,0 +1,26 @@
+---
+- name: Collect the installed packages
+  package_facts:
+    manager: auto
+
+- name: Install Docker if it is not installed
+  include_role:
+    name: configure-docker
+  when: docker_package not in ansible_facts.packages
+
+- name: Get the Dockerfile and the HTML content
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ remote_dir }}/{{ item }}"
+  loop:
+  - Dockerfile
+  - "{{ html_file_name }}"
+
+- name: Build the image
+  command: "docker build -t {{ image_name }} {{ remote_dir }}"
+  become: yes
+
+- name: Start the container
+  command: "docker run -d --restart unless-stopped -p {{ port_map }} --name {{ container_name }} {{ image_name }}"
+  become: yes
+...
