@@ -35,4 +35,5 @@ The logic I chose to implement inside the ALB is this:
 - `./populate_ansible_hosts.sh`
 - `cd ansible/`
 - `ansible-playbook setup-nginx.yml`
+- After the POC, `terraform destroy` if you want.
 
