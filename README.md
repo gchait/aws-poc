@@ -5,11 +5,11 @@ The learning was intense, but obviously it was worth it.
 
 This repository contains:
 - `README.md` - What you're currently reading.
-- `lambda.(py|zip)` - A simple script that returns the time, meant to serve as an AWS Lambda Function.
-- `main.tf` - A Terraform deployment of 2 EC2 instances, 1 Lambda Function and 1 ALB to balance traffic between them.
-- `populate_ansible_hosts.sh` - After running `terraform apply`, this script can pull the IPs of the instances into the `ansible/hosts` file.
+- `iac/*` - A Terraform deployment of 2 EC2 instances, 1 Lambda Function and 1 ALB to balance traffic between them.
+- `iac/lambda/lambda.(py|zip)` - A simple script that returns the time, meant to serve as an AWS Lambda Function.
+- `iac/populate_ansible_hosts.sh` - After running `terraform apply`, this script can pull the IPs of the instances into the `ansible/hosts` file.
 - `ansible/*` - A rather simple NGINX deployment for the instances.
-- `.gitignore` - To not have the `*terraform*` and `ansible/hosts` files around here.
+- `.gitignore` - To not have the `iac/*terraform*` and `ansible/hosts` files around here.
 
 The logic I chose to implement inside the ALB is this:
 - If a request arrives to `/time` specifically, then it is always forwarded to the Lambda target group.
@@ -30,10 +30,12 @@ The logic I chose to implement inside the ALB is this:
 
 ### Steps to deploy
 
+- `cd iac/`
+- `terraform init`
 - `terraform plan`
 - `terraform apply`
 - `./populate_ansible_hosts.sh`
-- `cd ansible/`
+- `cd ../ansible/`
 - `ansible-playbook setup-nginx.yml`
 - After the POC, `terraform destroy` if you want.
 
