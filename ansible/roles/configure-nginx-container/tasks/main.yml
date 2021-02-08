@@ -23,4 +23,8 @@
 - name: Start the container
   command: "docker run -d --restart unless-stopped -p {{ port_map }} --name {{ container_name }} {{ image_name }}"
   become: yes
+  register: docker_run
+  failed_when:
+  - docker_run.rc != 0
+  - not (docker_run.rc == 125 and "You have to remove (or rename) that container to be able to reuse that name." in docker_run.stderr)
 ...
